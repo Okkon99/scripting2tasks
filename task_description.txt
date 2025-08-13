@@ -1,0 +1,62 @@
+the tasks are described below
+you will deliver the completed tasks through a clone of this git repository by just commiting your changes on top of it
+clone, or fork, this repository to a copy in your personal workspace on PSQ's gitlab
+
+1. make a simple game that runs only inside of ScriptGame.cs and outputs to Debug.Log and GUI.Label. rules below!
+
+2. make the same game, but fully on unity's terms. using prefabs, component scripts and the various functions that unity provides.
+simple graphics to represent what is happening like cubes that appear/disappear and move slightly when attacked & attacking.
+the game starts with GameClass.cs
+creative freedom outside of this is encouraged, but not at the expense of finishing it in time obviously :)
+
+I will help you if you are unsure about where to start, or continue, or anything really.
+it can be made in an infinite amount of ways, the important part is to practice how to apply coding.
+
+
+parameters of the game:
+--------------------
+
+there are 2 types of actors: one player and x amount of enemies
+a class that contains game rules is required in this design
+
+per class, the data they contain is:
+GameRules:
+game_level                          (starts at 1, increased by levelup-game)
+max_mana                            (starts at 100.0)
+mana_upgrade_cost                   (100.0, constant)
+max_mana_purchase_increase          (50.0, constant)
+player_mana_generated_per_second    (20.0, constant)
+player_mana_boost_per_level  (2.5, constant)
+
+Player:
+mana  (0.0-max_mana, starts at 0.0)
+level (starts at 1, increase by levelup-player)
+    a label is displayed for each player level (1 to 9) - private, private 1st class, corporal, sergeant, major, officer, captain, colonel, general
+
+Enemy:
+hp (0.0-100.0, starts at 100.0)
+
+rules:
+if player reaches level 10, you win.
+if the number of enemies reaches 10, you lose. (starts at 0 enemies)
+
+player can take 3 actions:
+1 - attack the first enemy in the list. if enemy hp reaches 0, remove it from the list. 
+    attacking with mana damages 1 hp per 1 mana, uses all mana until first enemy is dead or out of mana.
+
+2 - levelup-player. mana is spent for this and the cost is 
+    ( 100.0 + 5.0 * game_level + 10.0 * number_of_enemies )
+    if the player can afford it, level up player
+
+3 - purchase max mana. if player can afford the cost (mana_upgrade_cost),
+    max_mana is increased by max_mana_purchase_increase and player mana is deducted
+
+
+mana of player is increased every frame according to function:
+    ( player_mana_generated_per_second + player_mana_boost_per_level * player_level ) per second, never above max_mana
+
+OnGameLevelIncreaseEvent - levelup-game, game is leveled up by 1
+
+OnEnemySpawnEvent - one enemy is added to the collection of enemies
+
+--------------------
