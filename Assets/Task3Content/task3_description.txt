@@ -1,0 +1,3 @@
+all steps should behave the same (more or less) as the executable example for task3.
+
+when there is a game object or vector3 that is used as target, all steps should dynamically be able to follow those
