@@ -12,5 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Task3Scene.unity
     guid: 7d4e2255893118e4da9436cf20e074c8
   m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 99567ecdbcb8d484a86a9bb5218cec29, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
