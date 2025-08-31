@@ -6,7 +6,6 @@ public class Cube3_0 : MonoBehaviour
 {
     [HideInInspector]
     private VectorRenderer vectors;
-    public Vector3 direction;
 
     void OnEnable()
     {
