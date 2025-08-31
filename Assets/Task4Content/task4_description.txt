@@ -1,0 +1,5 @@
+all steps should behave the same (more or less) as the executable example for task4.
+
+on each step that has a game object or vector3 that is used as target, they should be able to follow those dynamically (if you move them around)
+
+each subtask has solutions that are at most a few lines of code added
