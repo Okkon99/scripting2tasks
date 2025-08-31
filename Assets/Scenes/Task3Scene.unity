@@ -1182,7 +1182,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53e10eae77af732418a3b0f07b8a54b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: {x: 0, y: 0, z: 0}
 --- !u!114 &493812937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1319,7 +1318,6 @@ GameObject:
   - component: {fileID: 650156397}
   - component: {fileID: 650156396}
   - component: {fileID: 650156399}
-  - component: {fileID: 650156401}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
