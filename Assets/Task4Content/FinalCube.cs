@@ -100,7 +100,7 @@ public class FinalCube : MonoBehaviour
 
     void OnGUI()
     {
-        GUI.Box(new Rect(0, 25, 500, 25), "");
-        GUI.Label(new Rect(10, 30, 500, 20), "controls - space: shoot, v: flail, r: reset target, wasd: move, 1,2,3... camera jump to subtask");
+        GUI.Box(new Rect(0, 25, 600, 25), "");
+        GUI.Label(new Rect(10, 30, 600, 20), "controls - space: shoot, v: flail, r: reset target, wasd: move, 1,2,3... camera jump to subtask");
     }
 }
