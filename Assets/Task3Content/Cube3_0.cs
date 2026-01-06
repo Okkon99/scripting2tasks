@@ -12,13 +12,17 @@ public class Cube3_0 : MonoBehaviour
         vectors = GetComponent<VectorRenderer>();
     }
 
-
     void Update()
     {
         using (vectors.Begin())
         {
-            vectors.Draw(transform.position, transform.position + new Vector3(0.0f, 0.0f, 1.0f), Color.orange, 0.05f, 0.2f);
+            vectors.Draw(
+                transform.position,
+                transform.position + new Vector3(0.0f, 0.0f, 1.0f),
+                new Color(1.0f, 0.7f, 0.0f),
+                0.05f,
+                0.2f
+            );
         }
-
     }
 }

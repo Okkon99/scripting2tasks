@@ -353,6 +353,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -559,7 +560,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &495890370
 Transform:
   m_ObjectHideFlags: 0
@@ -598,7 +599,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 590291103}
-  - component: {fileID: 590291102}
+  - component: {fileID: 590291104}
   m_Layer: 0
   m_Name: ScriptGame
   m_TagString: Untagged
@@ -606,69 +607,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &590291102
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 590291101}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2468d78e43eabe84bb19267462a6d759, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player_input_1:
-    m_Name: Player_input_1
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: c824513b-dfb9-49c7-a02a-42857ff0e569
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: b5e9901b-a535-4531-98b3-91e94288048f
-      m_Path: <Keyboard>/1
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Player_input_1
-      m_Flags: 0
-    m_Flags: 0
-  player_input_2:
-    m_Name: Player_input_2
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 0d2f1b71-2c92-42c4-a566-10c8ceddac8d
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 186006d6-00b4-460b-ab5a-ee66dd640ee2
-      m_Path: <Keyboard>/2
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Player_input_2
-      m_Flags: 0
-    m_Flags: 0
-  player_input_3:
-    m_Name: Player_input_3
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 5a52ea57-5f20-4ddd-a72b-1140fdeef4fb
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 51651850-dc3a-4511-b85d-0f5e48f45aae
-      m_Path: <Keyboard>/3
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Player_input_3
-      m_Flags: 0
-    m_Flags: 0
 --- !u!4 &590291103
 Transform:
   m_ObjectHideFlags: 0
@@ -684,6 +622,69 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &590291104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 590291101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8763f0553717f642ac35b4f70bfa0ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player_input_1:
+    m_Name: Player_input_1
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: e89eedc7-f97e-4a8c-ac1a-409f68266706
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: c3cdf351-f5df-404a-9ad6-20926c244991
+      m_Path: <Keyboard>/1
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Player_input_1
+      m_Flags: 0
+    m_Flags: 0
+  player_input_2:
+    m_Name: Player_input_2
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 2c8fc3cf-1f3e-41ad-ae75-797cdd74dac8
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 543fc4f2-0b28-4b56-ba2f-6517d7f74ba2
+      m_Path: <Keyboard>/2
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Player_input_2
+      m_Flags: 0
+    m_Flags: 0
+  player_input_3:
+    m_Name: Player_input_3
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 228106b4-8816-4854-8319-770420da213b
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: cac0b944-6f66-4be6-bd71-13359ab56f5d
+      m_Path: <Keyboard>/3
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Player_input_3
+      m_Flags: 0
+    m_Flags: 0
 --- !u!1 &1240085212
 GameObject:
   m_ObjectHideFlags: 0
@@ -902,6 +903,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0

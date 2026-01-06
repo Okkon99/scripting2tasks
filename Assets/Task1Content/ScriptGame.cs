@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace ScriptGame
 {
@@ -17,13 +19,20 @@ namespace ScriptGame
     {
     }
 
-    public class ScriptProgram
+    public class ScriptGame : MonoBehaviour
     {
-        static GameRules game_rules = new GameRules();
-        static Player player = new Player();
-        static List<Enemy> enemies = new List<Enemy>();
+        GameRules game_rules = new GameRules();
+        Player player = new Player();
+        List<Enemy> enemies = new List<Enemy>();
 
-        public static void Start()
+        public InputAction player_input_1;
+        public InputAction player_input_2;
+        public InputAction player_input_3;
+
+        float enemy_spawn_timer = 1.0f;
+        float game_level_timer = 6.0f;
+
+        public void Start()
         {
             Debug.Log("Start has been called!");
 
@@ -31,11 +40,46 @@ namespace ScriptGame
 
         }
 
-        public static void Update()
+        void OnEnable()
         {
+            player_input_1.Enable();
+            player_input_2.Enable();
+            player_input_3.Enable();
         }
 
-        public static void OnGUI()
+        public void Update()
+        {
+            enemy_spawn_timer -= Time.deltaTime;
+            game_level_timer -= Time.deltaTime;
+
+            if (enemy_spawn_timer <= 0.0f)
+            {
+                OnEnemySpawnEvent();
+
+                enemy_spawn_timer += RandomNumberGenerator.GetInt32(4, 6);
+            }
+            if (game_level_timer <= 0.0f)
+            {
+                OnGameLevelIncreaseEvent();
+
+                game_level_timer += RandomNumberGenerator.GetInt32(4, 6);
+            }
+
+            if (player_input_1.triggered)
+            {
+                OnPlayerInput1();
+            }
+            if (player_input_2.triggered)
+            {
+                OnPlayerInput2();
+            }
+            if (player_input_3.triggered)
+            {
+                OnPlayerInput3();
+            }
+        }
+
+        public void OnGUI()
         {
             float t = Time.time;
 
@@ -58,25 +102,25 @@ namespace ScriptGame
             GUI.Label(new Rect(10, 150, 300, 20), String.Format("enemies: {0}", enemy_count));
         }
 
-        public static void OnGameLevelIncreaseEvent()
+        public void OnGameLevelIncreaseEvent()
         {
         }
 
-        public static void OnEnemySpawnEvent()
+        public void OnEnemySpawnEvent()
         {
         }
 
-        public static void PlayerInput1()
+        public void OnPlayerInput1()
         {
             Debug.Log("input1");
         }
 
-        public static void PlayerInput2()
+        public void OnPlayerInput2()
         {
             Debug.Log("input2");
         }
 
-        public static void PlayerInput3()
+        public void OnPlayerInput3()
         {
             Debug.Log("input3");
         }

@@ -1,10 +1,10 @@
-the tasks are described below
-you will deliver the completed tasks through a clone of this git repository by just commiting your changes on top of it
+the tasks are described below:
+you will deliver the completed tasks through a clone of this git repository by just commiting and pushing your changes.
 clone, or fork, this repository to a copy in your personal workspace on PSQ's gitlab
 
-1. make a simple game that runs only inside of ScriptGame.cs and outputs to Debug.Log and GUI.Label. rules below!
+task 1. make a simple game that runs only inside of ScriptGame.cs and outputs to Debug.Log and GUI.Label. rules below!
 
-2. make the same game, but fully on unity's terms. using prefabs, component scripts and the various functions that unity provides.
+task 2. make the same game, but fully on unity's terms. using prefabs, component scripts and the various functions that unity provides.
 simple graphics to represent what is happening like cubes that appear/disappear and move slightly when attacked & attacking.
 the game starts with GameClass.cs
 creative freedom outside of this is encouraged, but not at the expense of finishing it in time obviously :)
@@ -26,7 +26,7 @@ max_mana                            (starts at 100.0)
 mana_upgrade_cost                   (100.0, constant)
 max_mana_purchase_increase          (50.0, constant)
 player_mana_generated_per_second    (20.0, constant)
-player_mana_boost_per_level  (2.5, constant)
+player_mana_boost_per_level         (2.5, constant)
 
 Player:
 mana  (0.0-max_mana, starts at 0.0)

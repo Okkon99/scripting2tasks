@@ -66,5 +66,5 @@
     "explorer.fileNesting.patterns": {
         "*.sln": "*.csproj"
     },
-    "dotnet.defaultSolution": "Scripting2Tasks.sln"
+    "dotnet.defaultSolution": "scripting2tasks.sln"
 }

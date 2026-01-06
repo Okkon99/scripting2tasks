@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GameClass : MonoBehaviour
+public class Game : MonoBehaviour
 {
     public GameObject playerPrefab;
     public GameObject enemyPrefab;

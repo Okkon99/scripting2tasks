@@ -17,8 +17,13 @@ public class Cube3_1 : MonoBehaviour
     {
         using (vectors.Begin())
         {
-            vectors.Draw(transform.position, transform.position + direction, Color.orange, 0.05f, 0.2f);
+            vectors.Draw(
+                transform.position,
+                transform.position + direction,
+                new Color(1.0f, 0.7f, 0.0f),
+                0.05f,
+                0.2f
+            );
         }
-
     }
 }

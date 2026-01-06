@@ -20,7 +20,7 @@ public class Cube4_0 : MonoBehaviour
 
         using (vectors.Begin())
         {
-            vectors.Draw(transform.position, end_vector, Color.orange * 5.0f);
+            vectors.Draw(transform.position, end_vector, new Color(1.0f, 0.7f, 0.0f) * 5.0f);
         }
     }
 }

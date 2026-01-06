@@ -18,7 +18,7 @@ public class Cube4_3 : MonoBehaviour
     {
         using (vectors.Begin())
         {
-            vectors.Draw(transform.position, transform.position + transform.forward * 2.0f, Color.orange * 5.0f);
+            vectors.Draw(transform.position, transform.position + transform.forward * 2.0f, new Color(1.0f, 0.7f, 0.0f) * 5.0f);
         }
     }
 }
