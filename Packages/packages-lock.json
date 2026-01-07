@@ -205,11 +205,11 @@
       "url": "https://packages.unity.com"
     },
     "se.his.vector-renderer": {
-      "version": "https://github.com/UniversityOfSkovde/Vector-Renderer.git",
+      "version": "1.0.10",
       "depth": 0,
-      "source": "git",
+      "source": "registry",
       "dependencies": {},
-      "hash": "44e9ee8565ada5d5461c353d09211f8e5a1d73c3"
+      "url": "https://package.openupm.com"
     },
     "com.unity.modules.accessibility": {
       "version": "1.0.0",
