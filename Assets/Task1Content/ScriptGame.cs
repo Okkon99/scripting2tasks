@@ -66,6 +66,7 @@ namespace ScriptGame
             "Captain",
             "Colonel",
             "General",
+            "Winner!"
         };
 
         public void Start()
@@ -91,15 +92,7 @@ namespace ScriptGame
             {
                 if (player_resetgame.triggered)
                 {
-                    Debug.Log("if statement successful");
-                    gameLevel = 1;
-                    playerLevel = 1;
-                    playerMana = 0f;
-                    maxMana = 100f;
-                    enemies.Clear();
-                    UpdatePlayerTitle();
-
-                    gameEnded = false;
+                    ResetGame();
                 }
                 return;
             }
@@ -168,6 +161,19 @@ namespace ScriptGame
         {
             Debug.Log("You lost");
             gameEnded = true;
+        }
+
+        public void ResetGame()
+        {
+            Debug.Log("if statement successful");
+            gameLevel = 1;
+            playerLevel = 1;
+            playerMana = 0f;
+            maxMana = 100f;
+            enemies.Clear();
+            UpdatePlayerTitle();
+
+            gameEnded = false;
         }
 
         public void OnGameLevelIncreaseEvent()
