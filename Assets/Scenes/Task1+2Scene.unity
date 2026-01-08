@@ -634,55 +634,72 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8763f0553717f642ac35b4f70bfa0ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player_input_1:
-    m_Name: Player_input_1
+  player_attack:
+    m_Name: Player_attack
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: e89eedc7-f97e-4a8c-ac1a-409f68266706
+    m_Id: 2eb534a1-802a-44aa-b3f9-a0a7e74c10ae
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: c3cdf351-f5df-404a-9ad6-20926c244991
+      m_Id: 9feb5979-a90e-41ad-9b15-2dbe40a7b26d
       m_Path: <Keyboard>/1
       m_Interactions: 
       m_Processors: 
       m_Groups: 
-      m_Action: Player_input_1
+      m_Action: Player_attack
       m_Flags: 0
     m_Flags: 0
-  player_input_2:
-    m_Name: Player_input_2
+  player_levelup:
+    m_Name: Player_levelup
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 2c8fc3cf-1f3e-41ad-ae75-797cdd74dac8
+    m_Id: 6b5b2aba-0ee1-417f-82d3-83d3d6922d93
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: 543fc4f2-0b28-4b56-ba2f-6517d7f74ba2
+      m_Id: 6a81b28f-9f53-4e13-8f90-ac15737a441a
       m_Path: <Keyboard>/2
       m_Interactions: 
       m_Processors: 
       m_Groups: 
-      m_Action: Player_input_2
+      m_Action: Player_levelup
       m_Flags: 0
     m_Flags: 0
-  player_input_3:
-    m_Name: Player_input_3
+  player_manaupgrade:
+    m_Name: Player_manaupgrade
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 228106b4-8816-4854-8319-770420da213b
+    m_Id: 9929f2ad-4835-4f06-a80e-9d0a0cc6eafa
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: cac0b944-6f66-4be6-bd71-13359ab56f5d
+      m_Id: 8ceabb66-5042-4512-a5b1-5156776021e1
       m_Path: <Keyboard>/3
       m_Interactions: 
       m_Processors: 
       m_Groups: 
-      m_Action: Player_input_3
+      m_Action: Player_manaupgrade
+      m_Flags: 0
+    m_Flags: 0
+  player_resetgame:
+    m_Name: Player_resetgame
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 55395037-6415-46bf-8e5c-109d0580ae44
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 320d63c0-af1b-43d3-a6fa-fc92494748e1
+      m_Path: <Keyboard>/space
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Player_resetgame
       m_Flags: 0
     m_Flags: 0
 --- !u!1 &1240085212
