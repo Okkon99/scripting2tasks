@@ -22,7 +22,6 @@ namespace ScriptGame
     {
         public float mana = 0.0f;
         public int level = 1;
-        //    a label is displayed for each player level (1 to 9) - private, private 1st class, corporal, sergeant, major, officer, captain, colonel, general
     }
 
     class Enemy
@@ -33,7 +32,6 @@ namespace ScriptGame
     public class ScriptGame : MonoBehaviour
     {
         GameRules game_rules = new GameRules();
-        Player player = new Player();
         List<Enemy> enemies = new List<Enemy>();
 
         public InputAction player_attack;
