@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private float mana = 0.0f;
-    private int level = 1;
+    public float mana;
+    public float maxMana;
+    public int level;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

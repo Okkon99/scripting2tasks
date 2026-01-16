@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
+using TMPro;
 
 class GameRules
 {
@@ -27,6 +28,11 @@ public class Game : MonoBehaviour
 
     public GameObject playerPrefab;
     public GameObject enemyPrefab;
+    public GameObject manaPrefab;
+    public GameObject maxManaPrefab;
+    public GameObject levelUpCostPrefab;
+    public GameObject enemyHPPrefab;
+    public TMP_Text playerAreaLabel;
 
     List<EnemyScript> enemies = new List<EnemyScript>();
     GameRules game_rules = new GameRules();
@@ -34,15 +40,18 @@ public class Game : MonoBehaviour
     float enemy_spawn_timer = 1.0f;
     float game_level_timer = 6.0f;
 
-    float playerMana;
-    float maxMana = 100.0f;
 
     int gameLevel = 1;
-    int playerLevel = 1;
     float levelUpCost;
     string playerTitle = "test";
     GameObject lossEnemy;
     GameObject playerObject;
+    GameObject manaObject;
+    GameObject maxManaObject;
+    GameObject levelUpCostObject;
+    GameObject enemyHPObject;
+    Player player;
+
 
     List<Vector2Int> freeCells = new List<Vector2Int>();
 
@@ -64,14 +73,14 @@ public class Game : MonoBehaviour
 
     void Start()
     {
-        if (playerPrefab != null)
-        {
-            playerObject = Instantiate(playerPrefab, new Vector3(3f, 0.75f, 4f), transform.rotation);
-        }
-
+        SpawnPlayer();
         PopulateValidCells();
-
         UpdatePlayerTitle();
+        SpawnMaxManaObj();
+
+        manaObject =        Instantiate(manaPrefab,         new Vector3(2f, 0f, 2f), Quaternion.Euler(1f, 0f, 0f));
+        levelUpCostObject = Instantiate(levelUpCostPrefab,  new Vector3(3f, 0f, 2f), Quaternion.Euler(0.2f, 0f, 0f));
+        enemyHPObject =     Instantiate(enemyHPPrefab,      new Vector3(3f, 0f, 2f), Quaternion.Euler(0.2f, 0f, 0f));
     }
 
     void OnEnable()
@@ -89,6 +98,7 @@ public class Game : MonoBehaviour
             if (player_resetgame.triggered)
             {
                 ResetGame();
+                UpdatePlayerTitle();
             }
             return;
         }
@@ -112,7 +122,7 @@ public class Game : MonoBehaviour
         ManaRegeneration();
         CalculateLevelUpCost();
 
-        if (playerLevel == 10)
+        if (player.level == 10)
         {
             WinEvent();
         }
@@ -133,7 +143,7 @@ public class Game : MonoBehaviour
         }
     }
 
-    //GUI Placeholder
+    /*GUI Placeholder
     public void OnGUI()
     {
         float t = Time.time;
@@ -143,15 +153,31 @@ public class Game : MonoBehaviour
 
 
         GUI.Label(new Rect(10, 30, 300, 20), String.Format("game level {0}", gameLevel));
-        GUI.Label(new Rect(10, 50, 300, 20), String.Format("player: level {0} ({1})", playerLevel, playerTitle));
-        GUI.Label(new Rect(10, 90, 300, 20), String.Format("max_mana: {0}", maxMana));
+        GUI.Label(new Rect(10, 50, 300, 20), String.Format("player: level {0} ({1})", player.level, playerTitle));
+        GUI.Label(new Rect(10, 90, 300, 20), String.Format("max_mana: {0}", player.maxMana));
         GUI.Label(new Rect(10, 110, 300, 20), String.Format("levelup cost: {0:0}", levelUpCost));
-        GUI.Label(new Rect(10, 130, 300, 20), String.Format("mana: {0:0}", playerMana));
+        GUI.Label(new Rect(10, 130, 300, 20), String.Format("mana: {0:0}", player.mana));
         GUI.Label(new Rect(10, 150, 300, 20), String.Format("enemies: {0}", enemies.Count));
-    }
+    }*/
 
 
     //   Methods   Methods   Methods   Methods   Methods   Methods   Methods   Methods   Methods   Methods
+
+    //   Methods   Methods   Methods   Methods   Methods   Methods   Methods   Methods   Methods   Methods
+
+    //   Methods   Methods   Methods   Methods   Methods   Methods   Methods   Methods   Methods   Methods
+    
+    void SpawnPlayer()
+    {
+        playerObject = Instantiate(playerPrefab, new Vector3(3f, 0.75f, 4f), transform.rotation);
+        player = playerObject.GetComponent<Player>();
+    }
+
+    void SpawnMaxManaObj()
+    {
+        maxManaObject = Instantiate(maxManaPrefab, new Vector3(3f, 0f, 2f), Quaternion.Euler(0.2f, 0f, 0f));
+    }
+
     public void WinEvent()
     {
         Debug.Log("YOU WIN!!!!!");
@@ -169,23 +195,35 @@ public class Game : MonoBehaviour
     public void ResetGame()
     {
         gameLevel = 1;
-        playerLevel = 1;
-        playerMana = 0f;
-        maxMana = 100f;
+
         UpdatePlayerTitle();
 
         foreach (EnemyScript enemy in enemies)
         {
             Destroy(enemy.gameObject);
         }
-        enemies.Clear();
-        Destroy(lossEnemy.gameObject);
-        PopulateValidCells();
 
-        if (playerPrefab != null)
+        enemies.Clear();
+
+        if (lossEnemy)
+            Destroy(lossEnemy);
+
+        if (playerObject)
+            Destroy(playerObject);
+        
+        PopulateValidCells();
+        SpawnPlayer();
+
+        if (maxManaObject)
         {
-            playerObject = Instantiate(playerPrefab, new Vector3(3f, 0.75f, 4f), transform.rotation);
+            Destroy(maxManaObject);
+            SpawnMaxManaObj();
         }
+
+
+        player.level = 1;
+        player.mana = 0f;
+        player.maxMana = 100f;
 
         gameEnded = false;
     }
@@ -227,19 +265,33 @@ public class Game : MonoBehaviour
 
         enemies.Add(enemy);
 
-
-
         return;
     }
 
     public void ManaRegeneration()
     {
-        float regenPerSecond = game_rules.player_mana_generated_per_second + game_rules.player_mana_boost_per_level * playerLevel;
+        if (player == null) // idk if this is needed anymore, but in a previous version of this setup,
+            return;         // not having this broke everything so im leaving it
 
-        if (playerMana < maxMana)
+        float regenPerSecond = game_rules.player_mana_generated_per_second + game_rules.player_mana_boost_per_level * player.level;
+
+        if (manaObject)
         {
-            playerMana += regenPerSecond * Time.deltaTime;
-            playerMana = Mathf.Min(playerMana, maxMana);
+            Transform manaVisual = manaObject.transform.GetChild(0);
+
+            Vector3 scale = manaVisual.transform.localScale;
+            Vector3 position = manaVisual.transform.localPosition;
+            scale.y = player.mana / 200;
+            position.x = player.mana / 200;
+
+            manaVisual.transform.localScale = scale;
+            manaVisual.transform.localPosition = position;
+        }
+
+        if (player.mana < player.maxMana)
+        {
+            player.mana += regenPerSecond * Time.deltaTime;
+            player.mana = Mathf.Min(player.mana, player.maxMana);
         }
     }
 
@@ -247,12 +299,26 @@ public class Game : MonoBehaviour
     {
         levelUpCost = (100f + 5f * gameLevel + 10f * enemies.Count);
 
+        if (levelUpCostObject)
+        {
+            Vector3 position = levelUpCostObject.transform.localPosition;
+
+            position.x = levelUpCost / 100 + 2;
+
+            levelUpCostObject.transform.localPosition = position;
+        }
+
         return levelUpCost;
     }
 
     public void UpdatePlayerTitle()
     {
-        playerTitle = playerTitles[playerLevel - 1];
+        playerTitle = playerTitles[player.level - 1];
+
+        if (!playerAreaLabel)
+            return;
+
+        playerAreaLabel.text = $"Player Rank: \n{playerTitle}";
     }
 
     public void OnPlayerInputAttack()
@@ -263,30 +329,43 @@ public class Game : MonoBehaviour
         {
             EnemyScript oldestEnemy = enemies[0];
 
-            if (oldestEnemy.hp <= playerMana)
+            if (oldestEnemy.hp <= player.mana)
             {
-                playerMana -= oldestEnemy.hp;
+                player.mana -= oldestEnemy.hp;
                 enemies.Remove(oldestEnemy);
                 freeCells.Add(oldestEnemy.GridCell);
                 Destroy(oldestEnemy.gameObject);
+                
+                if (enemyHPObject)
+                {
+                    enemyHPObject.transform.position = new Vector3(3f, 0f, 2f);
+                }
             }
             else
             {
-                oldestEnemy.hp -= playerMana;
-                playerMana = 0f;
+                oldestEnemy.hp -= player.mana;
+                player.mana = 0f;
+
+                if (enemyHPObject)
+                {
+                    Vector3 position = enemyHPObject.transform.localPosition;
+
+                    position.x = oldestEnemy.hp / 100 + 2;
+
+                    enemyHPObject.transform.localPosition = position;
+                }
             }
         }
-
     }
 
     public void OnPlayerInputLevelUp()
     {
         Debug.Log("input2");
 
-        if (playerMana >= levelUpCost)
+        if (player.mana >= levelUpCost)
         {
-            playerMana -= levelUpCost;
-            playerLevel++;
+            player.mana -= levelUpCost;
+            player.level++;
 
             UpdatePlayerTitle();
         }
@@ -296,10 +375,19 @@ public class Game : MonoBehaviour
     {
         Debug.Log("input3");
 
-        if (playerMana >= game_rules.mana_upgrade_cost)
+        if (player.mana >= game_rules.mana_upgrade_cost)
         {
-            playerMana -= game_rules.mana_upgrade_cost;
-            maxMana += game_rules.max_mana_purchase_increase;
+            player.mana -= game_rules.mana_upgrade_cost;
+            player.maxMana += game_rules.max_mana_purchase_increase;
+
+            if (maxManaObject)
+            {
+                Vector3 position = maxManaObject.transform.localPosition;
+
+                position.x = player.maxMana / 100 + 2;
+
+                maxManaObject.transform.localPosition = position;
+            }
         }
 
     }
