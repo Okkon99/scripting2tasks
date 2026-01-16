@@ -669,7 +669,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &495890370
 Transform:
   m_ObjectHideFlags: 0
@@ -771,7 +771,7 @@ MonoBehaviour:
   maxManaPrefab: {fileID: 2524948967589498341, guid: 8c6df2844862244419dcc9369f2ee6ae, type: 3}
   levelUpCostPrefab: {fileID: 8711132873051587422, guid: 82ac3cc4adbc8f541825ef9afa1c7c9b, type: 3}
   enemyHPPrefab: {fileID: 2524948967589498341, guid: c240c6f05a4649c47a3f686b3deba223, type: 3}
-  playerArea: {fileID: 431805999}
+  playerAreaLabel: {fileID: 1449571239}
 --- !u!1 &590291101
 GameObject:
   m_ObjectHideFlags: 0
@@ -788,7 +788,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &590291103
 Transform:
   m_ObjectHideFlags: 0
@@ -1231,8 +1231,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
-  m_fontSizeBase: 14
+  m_fontSize: 10
+  m_fontSizeBase: 10
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1270,7 +1270,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 6.450999, y: 0.0611372, z: 6.8278847, w: 1.6346631}
+  m_margin: {x: 2.2396502, y: 0.0611372, z: 2.6361675, w: 1.6346631}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   _SortingLayer: 0

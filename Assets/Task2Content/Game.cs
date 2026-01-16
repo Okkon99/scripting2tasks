@@ -59,15 +59,15 @@ public class Game : MonoBehaviour
 
     string[] playerTitles = new string[]
     {
-            "Private",
-            "Private 1st Class",
-            "Corporal",
-            "Sergeant",
-            "Major",
-            "Officer",
-            "Captain",
-            "Colonel",
-            "General",
+            "Private (1)",
+            "Private 1st Class (2)",
+            "Corporal (3)",
+            "Sergeant (4)",
+            "Major (5)",
+            "Officer (6)",
+            "Captain (7)",
+            "Colonel (8)",
+            "General (9)",
             "Winner!"
     };
 
@@ -143,7 +143,7 @@ public class Game : MonoBehaviour
         }
     }
 
-    /*GUI Placeholder
+    //GUI Placeholder
     public void OnGUI()
     {
         float t = Time.time;
@@ -158,7 +158,7 @@ public class Game : MonoBehaviour
         GUI.Label(new Rect(10, 110, 300, 20), String.Format("levelup cost: {0:0}", levelUpCost));
         GUI.Label(new Rect(10, 130, 300, 20), String.Format("mana: {0:0}", player.mana));
         GUI.Label(new Rect(10, 150, 300, 20), String.Format("enemies: {0}", enemies.Count));
-    }*/
+    }
 
 
     //   Methods   Methods   Methods   Methods   Methods   Methods   Methods   Methods   Methods   Methods
