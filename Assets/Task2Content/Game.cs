@@ -77,10 +77,9 @@ public class Game : MonoBehaviour
         PopulateValidCells();
         UpdatePlayerTitle();
         SpawnMaxManaObj();
-
-        manaObject =        Instantiate(manaPrefab,         new Vector3(2f, 0f, 2f), Quaternion.Euler(1f, 0f, 0f));
-        levelUpCostObject = Instantiate(levelUpCostPrefab,  new Vector3(3f, 0f, 2f), Quaternion.Euler(0.2f, 0f, 0f));
-        enemyHPObject =     Instantiate(enemyHPPrefab,      new Vector3(3f, 0f, 2f), Quaternion.Euler(0.2f, 0f, 0f));
+        SpawnEnemyHPObj();
+        SpawnLevelUpCostObj();
+        SpawnManaObj();
     }
 
     void OnEnable()
@@ -143,7 +142,7 @@ public class Game : MonoBehaviour
         }
     }
 
-    //GUI Placeholder
+    /*GUI Placeholder
     public void OnGUI()
     {
         float t = Time.time;
@@ -158,7 +157,7 @@ public class Game : MonoBehaviour
         GUI.Label(new Rect(10, 110, 300, 20), String.Format("levelup cost: {0:0}", levelUpCost));
         GUI.Label(new Rect(10, 130, 300, 20), String.Format("mana: {0:0}", player.mana));
         GUI.Label(new Rect(10, 150, 300, 20), String.Format("enemies: {0}", enemies.Count));
-    }
+    }*/
 
 
     //   Methods   Methods   Methods   Methods   Methods   Methods   Methods   Methods   Methods   Methods
@@ -173,9 +172,24 @@ public class Game : MonoBehaviour
         player = playerObject.GetComponent<Player>();
     }
 
+    void SpawnLevelUpCostObj()
+    {
+        levelUpCostObject = Instantiate(levelUpCostPrefab, new Vector3(3f, 0f, 2f), Quaternion.Euler(0.2f, 0f, 0f));
+    }
+
     void SpawnMaxManaObj()
     {
         maxManaObject = Instantiate(maxManaPrefab, new Vector3(3f, 0f, 2f), Quaternion.Euler(0.2f, 0f, 0f));
+    }
+
+    void SpawnManaObj()
+    {
+        manaObject = Instantiate(manaPrefab, new Vector3(2f, 0f, 2f), Quaternion.Euler(1f, 0f, 0f));
+    }
+
+    void SpawnEnemyHPObj()
+    {
+        enemyHPObject = Instantiate(enemyHPPrefab, new Vector3(3f, 0f, 2f), Quaternion.Euler(0.2f, 0f, 0f));
     }
 
     public void WinEvent()
@@ -218,6 +232,12 @@ public class Game : MonoBehaviour
         {
             Destroy(maxManaObject);
             SpawnMaxManaObj();
+        }
+
+        if (enemyHPObject)
+        {
+            Destroy(enemyHPObject);
+            SpawnEnemyHPObj();
         }
 
 
