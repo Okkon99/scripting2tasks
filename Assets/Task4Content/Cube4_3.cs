@@ -1,24 +1,15 @@
 using UnityEngine;
-using Vectors;
 
-[RequireComponent(typeof(VectorRenderer))]
 public class Cube4_3 : MonoBehaviour
 {
-    [HideInInspector]
-    private VectorRenderer vectors;
-
-    public GameObject target;
+    Vector3 start_position;
 
     void Start()
     {
-        vectors = GetComponent<VectorRenderer>();
+        start_position = transform.position;
     }
 
     void Update()
     {
-        using (vectors.Begin())
-        {
-            vectors.Draw(transform.position, transform.position + transform.forward * 2.0f, new Color(1.0f, 0.7f, 0.0f) * 5.0f);
-        }
     }
 }

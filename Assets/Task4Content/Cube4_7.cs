@@ -1,7 +1,8 @@
 using UnityEngine;
 
-public class Cube3_5 : MonoBehaviour
+public class Cube4_7 : MonoBehaviour
 {
+    public GameObject orbit_target;
 
     public Vector3 rotation;
 
