@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -16,6 +17,8 @@ public class FinalCube : MonoBehaviour
     GameObject aim;
     GameObject flail;
     public GameObject ball_prefab;
+
+    int subtask_focused_idx = 0;
 
     void Start()
     {
@@ -87,10 +90,18 @@ public class FinalCube : MonoBehaviour
     {
         if (context.phase == InputActionPhase.Started)
         {
-            int subtask;
-            int.TryParse(context.control.name, out subtask);
+            if (context.control.name == "e")
+            {
+                subtask_focused_idx++;
+            }
+            else if (context.control.name == "q")
+            {
+                subtask_focused_idx--;
+            }
 
-            GameObject subtask_object = GameObject.Find("tasks").transform.GetChild(subtask - 1).gameObject;
+            subtask_focused_idx = Math.Clamp(subtask_focused_idx, 0, 13);
+
+            GameObject subtask_object = GameObject.Find("tasks").transform.GetChild(subtask_focused_idx).gameObject;
 
             Camera game_camera = Camera.allCameras[0];
             game_camera.transform.position = subtask_object.transform.position + new Vector3(-2.0f, 5.0f, -10.0f);

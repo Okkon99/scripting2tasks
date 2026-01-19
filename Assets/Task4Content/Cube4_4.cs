@@ -2,9 +2,16 @@ using UnityEngine;
 
 public class Cube4_4 : MonoBehaviour
 {
-    public GameObject target;
+    Vector3 start_position;
+
+    void Start()
+    {
+        start_position = transform.position;
+    }
 
     void Update()
     {
+        float t = Unity.Mathematics.math.frac(Time.time);
+
     }
 }
