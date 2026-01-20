@@ -998,6 +998,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1245149847}
     - target: {fileID: 8160459569770539765, guid: b00bdfaecd6421e49aa5e06010024644, type: 3}
+      propertyPath: sensitivity
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8160459569770539765, guid: b00bdfaecd6421e49aa5e06010024644, type: 3}
       propertyPath: cinemachineFollow
       value: 
       objectReference: {fileID: 0}
