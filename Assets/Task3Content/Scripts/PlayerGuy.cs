@@ -4,23 +4,21 @@ using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
-using Vertx.Debugging;
-using Vertx.Debugging.Internal;
 
 public class PlayerGuy : MonoBehaviour
 {
     public UnityEvent<int> objective_completed_event;
     int objectives_completed = 0;
 
-    public CinemachineFollow cinemachine_follow;
+    public CinemachineFollow cinemachineFollow;
     CharacterController controller;
     Vector3 velocity;
 
-    public float movement_speed = 5.0f;
-    public float camera_distance_min = 5.0f;
-    public float camera_distance_max = 15.0f;
-    float camera_pitch = 0.0f;
-    float camera_distance = 10.0f;
+    public float movementSpeed = 5.0f;
+    public float cameraDistanceMin = 5.0f;
+    public float cameraDistanceMax = 15.0f;
+    float cameraPitch = 0.0f;
+    float cameraDistance = 10.0f;
 
     public bool has_key = false;
 
@@ -55,26 +53,26 @@ public class PlayerGuy : MonoBehaviour
 
             if (Cursor.lockState == CursorLockMode.Locked)
             {
-                camera_distance += -mouse_scroll * 3.0f;
-                camera_distance = Math.Clamp(
-                    camera_distance,
-                    camera_distance_min,
-                    camera_distance_max
+                cameraDistance += -mouse_scroll * 3.0f;
+                cameraDistance = Math.Clamp(
+                    cameraDistance,
+                    cameraDistanceMin,
+                    cameraDistanceMax
                 );
 
                 transform.Rotate(new Vector3(0.0f, mouse_x, 0.0f));
 
-                camera_pitch -= mouse_y * 0.035f;
-                camera_pitch = Mathf.Clamp(
-                    camera_pitch,
+                cameraPitch -= mouse_y * 0.035f;
+                cameraPitch = Mathf.Clamp(
+                    cameraPitch,
                     -Mathf.PI / 2.0f + 0.1f,
                     Mathf.PI / 2.0f - 0.1f
                 );
 
-                cinemachine_follow.FollowOffset = new Vector3(
+                cinemachineFollow.FollowOffset = new Vector3(
                     0.0f,
-                    camera_distance * Mathf.Sin(camera_pitch),
-                    -camera_distance * Mathf.Cos(camera_pitch)
+                    cameraDistance * Mathf.Sin(cameraPitch),
+                    -cameraDistance * Mathf.Cos(cameraPitch)
                 );
             }
 
@@ -95,7 +93,7 @@ public class PlayerGuy : MonoBehaviour
                     movement_vector.Normalize();
                 }
 
-                movement_vector *= movement_speed;
+                movement_vector *= movementSpeed;
             }
 
             if (controller.isGrounded)
@@ -131,7 +129,7 @@ public class PlayerGuy : MonoBehaviour
 
     void TryInteract()
     {
-        float radius = 2.0f;
+        /*float radius = 2.0f;
         Collider[] collisions = Physics.OverlapSphere(transform.position, radius);
 
         foreach (Collider collider in collisions)
@@ -154,7 +152,7 @@ public class PlayerGuy : MonoBehaviour
         { // DEBUG
             Color color = Color.green;
             D.raw(new Shape.Sphere(transform.position, radius), color, 1.0f);
-        } // DEBUG
+        } // DEBUG*/
     }
 
     public void OnGUI()

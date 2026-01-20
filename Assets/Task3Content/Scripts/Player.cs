@@ -1,12 +1,29 @@
+using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.Windows;
 
 namespace GameTask3
 {
     public class Player : MonoBehaviour
     {
-        [SerializeField] Rigidbody rb;
+        [SerializeField] private CinemachineFollow cinemachineFollow;
+        [SerializeField] private GameManager gameManager;
+        [SerializeField] private Rigidbody rb;
 
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        
+        private CharacterController controller;
+        
+
+        Vector3 velocity;
+
+
+        private void Awake()
+        {
+            controller = GetComponent<CharacterController>();
+        }
+
+
         void Start()
         {
 
@@ -15,7 +32,18 @@ namespace GameTask3
         // Update is called once per frame
         void Update()
         {
-            
+            var input = GameManager.instance.Input.Gameplay;
+
+            if (input.Jump.triggered)
+            {
+                rb.linearVelocity = velocity;
+                Debug.Log("Successfully detected spacebar input");
+            }
+
+            if (input.Look.triggered)
+            {
+                Debug.Log("Successfully detected mouse input");
+            }
         }
     }
 }
