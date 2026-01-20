@@ -3,10 +3,10 @@
 create a player that can move around and jump
 
 2.
-create a mechanic like "pickup item" or "activate item when walking over/onto"
+create two different mechanics like "pickup item" or "activate item when walking over/onto"
 
 3.
-create an obstacle of any kind that can be bypassed by using the picked up item or activated mechanic
+create two different obstacle of any kind that can be bypassed by using the picked up item or activated mechanics
 
 4.
 define some goals for the level
