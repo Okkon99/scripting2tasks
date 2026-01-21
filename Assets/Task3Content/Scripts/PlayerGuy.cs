@@ -70,10 +70,7 @@ public class PlayerGuy : MonoBehaviour
                 );
 
                 cinemachineFollow.FollowOffset = new Vector3(
-                    0.0f,
-                    cameraDistance * Mathf.Sin(cameraPitch),
-                    -cameraDistance * Mathf.Cos(cameraPitch)
-                );
+                    0.0f, cameraDistance * Mathf.Sin(cameraPitch), -cameraDistance * Mathf.Cos(cameraPitch));
             }
 
         } // CAMERA MOVEMENT
