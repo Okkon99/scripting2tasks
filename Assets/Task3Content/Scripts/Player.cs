@@ -1,46 +1,68 @@
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Windows;
 
 namespace GameTask3
 {
     public class Player : MonoBehaviour
     {
         [Header("Player Settings")]
-        [SerializeField] private float sensitivity;
-        [SerializeField] private float mouseScrollSensitivity;
-        [SerializeField] private float moveSpeed;
-        [SerializeField] private float sprintSpeedPercent;
-        [SerializeField] private float jumpHeight;
-        [SerializeField] private float airControlStrength;
-        [SerializeField] private float airControlDecay;
+        [Header("")]
+        [Header("Mouse/Aim/Look Settings")]
 
+        // Mouse/Aim/Look
+        [SerializeField] private float lookSensitivity;
+        [SerializeField] private float mouseScrollSensitivity;
+
+        [Header("Movement Settings")]
+        [SerializeField] private float groundSpeed;
+        [SerializeField] private float airSpeed;
+        [SerializeField] private float acceleration;
+        [SerializeField] private float sprintSpeedPercent;
+
+        [Header("Jump/Air control Settings")]
+        [SerializeField] private float jumpHeight;
+        [SerializeField] private float airTimer;
+
+        [Header("Friction Settings")]
+        [SerializeField] private float groundFriction;
+        [SerializeField] private float airFriction;
 
         [Header("Camera Settings")]
         [SerializeField] private float cameraDistanceMin;
         [SerializeField] private float cameraDistanceMax;
 
-        [Header("World Settings")]
-        [SerializeField] private float gravity;
-
         [Header("Dependencies")]
         [SerializeField] private CinemachineFollow cinemachineFollow;
         [SerializeField] private GameManager gameManager;
-        [SerializeField] private CharacterController controller;
-        
+        [SerializeField] private Rigidbody rb;
+        [SerializeField] private LayerMask floorLayer;
+
+
         //camera
         float cameraPitch = 0.0f;
         float cameraDistance = 15.0f;
         float targetCameraDistance = 15.0f;
 
 
-        //player
+        //player (old)
         Vector3 velocity;
         Vector3 verticalVelocity;
         Vector3 horizontalVelocity;
         float targetSpeed;
         float baseSpeed;
-        public float currentAirControl;
+
+        //player
+        bool isGrounded;
+        float airTime;
+        float currentSpeed;
+
+        Vector3 desiredVelocity;
+        Vector2 moveInput;
+        bool jumpPressed;
+        bool sprintHeld;
+
 
         //inventory
         bool hasKey = false;
@@ -60,14 +82,20 @@ namespace GameTask3
 
         void Update()
         {
-            var input = GameManager.instance.Input.Gameplay;
+            // CACHE INPUTS
+                var input = GameManager.instance.Input.Gameplay;
+
+                moveInput = input.Move.ReadValue<Vector2>();
+                jumpPressed = input.Jump.triggered;
+                sprintHeld = input.Sprint.IsPressed();
+            // CACHE INPUTS END
 
             { // CAMERA MOVEMENT
                 Vector2 lookDelta = input.Look.ReadValue<Vector2>();
                 Vector2 scrollDelta = input.Scroll.ReadValue<Vector2>();
 
-                float mouseX = lookDelta.x * sensitivity;
-                float mouseY = lookDelta.y * sensitivity;
+                float mouseX = lookDelta.x * lookSensitivity;
+                float mouseY = lookDelta.y * lookSensitivity;
                 float mouseScroll = scrollDelta.y;
 
                 if (Cursor.lockState == CursorLockMode.Locked)
@@ -106,77 +134,44 @@ namespace GameTask3
                     );
                 }
 
-            } // CAMERA MOVEMENT
+            } // CAMERA MOVEMENT END
+        }
 
-            { // PLAYER MOVEMENT
-                Vector2 moveInput = input.Move.ReadValue<Vector2>();
-                Vector3 inputDirection = transform.forward * moveInput.y + transform.right * moveInput.x;
+        private void FixedUpdate()
+        {
+            //temporary grounded check. just a raycast down. if hit, isGrounded=true
+            isGrounded = Physics.Raycast(transform.position, Vector3.down, 1.1f, floorLayer);
+            if(!isGrounded)
+                Debug.Log(isGrounded);
 
-                baseSpeed = moveSpeed;
-                bool isSprinting = controller.isGrounded && input.Sprint.IsPressed();
-                targetSpeed = isSprinting ? baseSpeed * (1f + sprintSpeedPercent / 100f) : baseSpeed;
+            Vector3 inputDirection = transform.forward * moveInput.y + transform.right * moveInput.x;
+            inputDirection = inputDirection.normalized;
 
+            float speed = isGrounded ? groundSpeed : airSpeed;
 
-                bool canDoubleJump = false;
+            if (sprintHeld && isGrounded)
+            {
+                speed *= 1f + sprintSpeedPercent / 100f;
+            }
 
+            desiredVelocity = inputDirection * speed;
 
-                if (controller.isGrounded)
-                {
-                    horizontalVelocity = inputDirection.normalized * targetSpeed;
-                    currentAirControl = airControlStrength;
+            Vector3 currentVelocity = rb.linearVelocity;
+            Vector3 currentHorizontal = new Vector3(currentVelocity.x, 0f, currentVelocity.z);
+            Vector3 velocityDelta = desiredVelocity - currentHorizontal;
 
-                    if (verticalVelocity.y < 0f)
-                        verticalVelocity.y = -2f;
+            float maxAccel = acceleration * Time.fixedDeltaTime;
+            Vector3 accelVector = Vector3.ClampMagnitude(velocityDelta, maxAccel);
+            rb.linearVelocity += accelVector;
 
-                    if (input.Jump.triggered)
-                    {
-                        verticalVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-                    }
-                    canDoubleJump = true;
-                }
-                else
-                {
-                    horizontalVelocity += inputDirection.normalized * targetSpeed * currentAirControl * Time.deltaTime;
-
-                    currentAirControl = Mathf.MoveTowards(currentAirControl, 0f, airControlDecay * Time.deltaTime);
-                }
-                /*
-                if (input.Jump.triggered && canDoubleJump)
-                {
-                    canDoubleJump = false;
-                    Debug.Log("doublejumped");
-                }*/
-
-                if (input.DiveCrouch.triggered)
-                {
-                    if (horizontalVelocity.x < 0.1f && (horizontalVelocity.z < 0.1f))
-                    {
-                        Debug.Log("Crouch!");
-
-                    }
-                    else
-                    {
-                        Debug.Log("Dive!");
-
-                    }
-                }
-
-                verticalVelocity.y += gravity * Time.deltaTime;
-
-                Vector3 finalMove = horizontalVelocity + Vector3.up * verticalVelocity.y;
-                controller.Move(finalMove * Time.deltaTime);
-
-            } // PLAYER MOVEMENT
+            float friction = isGrounded ? groundFriction : airFriction;
+            
+            rb.linearDamping = isGrounded ? groundFriction : airFriction;
         }
 
         public void PickupKey()
         {
             hasKey = true;
-        }
-
-        private void ExampleMethod()
-        {
-            //do stuff
         }
     }
 }

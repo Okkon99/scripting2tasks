@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 8160459569770539765}
   - component: {fileID: 4381266311407725492}
   - component: {fileID: 2256903279499114186}
+  - component: {fileID: 3337340922026381819}
   - component: {fileID: 7889239409361746209}
-  - component: {fileID: 365148379991009474}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -48,19 +48,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da63ebaaf41a97549b0a4c8953d59cbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensitivity: 0.02
+  lookSensitivity: 0.02
   mouseScrollSensitivity: 1
-  moveSpeed: 9
+  groundSpeed: 0
+  airSpeed: 0
+  acceleration: 0
   sprintSpeedPercent: 60
   jumpHeight: 2
   airControlStrength: 1.5
   airControlDecay: 1
+  groundFriction: 0
+  airFriction: 0
+  airTimer: 0
   cameraDistanceMin: 5
   cameraDistanceMax: 15
   gravity: -30
   cinemachineFollow: {fileID: 0}
   gameManager: {fileID: 0}
-  controller: {fileID: 365148379991009474}
+  rb: {fileID: 0}
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  groundCheckPoint: {fileID: 0}
+  groundCheckBoxSize: {x: 0.5, y: 0.2}
   currentAirControl: 0
 --- !u!33 &4381266311407725492
 MeshFilter:
@@ -115,6 +125,33 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!54 &3337340922026381819
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4536562948449394103}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!136 &7889239409361746209
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -137,29 +174,4 @@ CapsuleCollider:
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!143 &365148379991009474
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4536562948449394103}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}

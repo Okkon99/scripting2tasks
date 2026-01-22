@@ -240,7 +240,7 @@ GameObject:
   - component: {fileID: 320741659}
   - component: {fileID: 320741658}
   - component: {fileID: 320741657}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -631,7 +631,7 @@ GameObject:
   - component: {fileID: 1048315268}
   - component: {fileID: 1048315267}
   - component: {fileID: 1048315266}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -739,7 +739,7 @@ GameObject:
   - component: {fileID: 1115371900}
   - component: {fileID: 1115371899}
   - component: {fileID: 1115371898}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -828,13 +828,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1115371897}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.38268343, w: 0.92387956}
-  m_LocalPosition: {x: -0, y: -347.7, z: 280}
+  m_LocalRotation: {x: 0, y: 0, z: 0.2164396, w: 0.97629607}
+  m_LocalPosition: {x: -120.6, y: -327, z: 280}
   m_LocalScale: {x: 500, y: 500, z: 500}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 45}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 25}
 --- !u!1 &1245149844
 GameObject:
   m_ObjectHideFlags: 0
@@ -973,7 +973,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TrackerSettings:
     BindingMode: 3
-    PositionDamping: {x: 0.1, y: 0.2, z: 0.5}
+    PositionDamping: {x: 0, y: 0, z: 0}
     AngularDampingMode: 0
     RotationDamping: {x: 0.5, y: 0.1, z: 0.5}
     QuaternionDamping: 1
@@ -1115,6 +1115,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3337340922026381819, guid: b00bdfaecd6421e49aa5e06010024644, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
     - target: {fileID: 4536562948449394103, guid: b00bdfaecd6421e49aa5e06010024644, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1160,18 +1164,63 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8160459569770539765, guid: b00bdfaecd6421e49aa5e06010024644, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 2649804854066353011}
+    - target: {fileID: 8160459569770539765, guid: b00bdfaecd6421e49aa5e06010024644, type: 3}
+      propertyPath: airSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8160459569770539765, guid: b00bdfaecd6421e49aa5e06010024644, type: 3}
+      propertyPath: airTimer
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8160459569770539765, guid: b00bdfaecd6421e49aa5e06010024644, type: 3}
+      propertyPath: jumpHeight
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8160459569770539765, guid: b00bdfaecd6421e49aa5e06010024644, type: 3}
+      propertyPath: airFriction
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8160459569770539765, guid: b00bdfaecd6421e49aa5e06010024644, type: 3}
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 1245149847}
     - target: {fileID: 8160459569770539765, guid: b00bdfaecd6421e49aa5e06010024644, type: 3}
+      propertyPath: groundSpeed
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8160459569770539765, guid: b00bdfaecd6421e49aa5e06010024644, type: 3}
+      propertyPath: acceleration
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 8160459569770539765, guid: b00bdfaecd6421e49aa5e06010024644, type: 3}
+      propertyPath: groundFriction
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8160459569770539765, guid: b00bdfaecd6421e49aa5e06010024644, type: 3}
       propertyPath: cinemachineFollow
       value: 
       objectReference: {fileID: 1695308158}
+    - target: {fileID: 8160459569770539765, guid: b00bdfaecd6421e49aa5e06010024644, type: 3}
+      propertyPath: floorLayer.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 8160459569770539765, guid: b00bdfaecd6421e49aa5e06010024644, type: 3}
+      propertyPath: sprintSpeedPercent
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b00bdfaecd6421e49aa5e06010024644, type: 3}
+--- !u!54 &2649804854066353011 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 3337340922026381819, guid: b00bdfaecd6421e49aa5e06010024644, type: 3}
+  m_PrefabInstance: {fileID: 2649804854066353009}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
