@@ -10,10 +10,10 @@ public class FinalCube : MonoBehaviour
 
     Vector2 input_move;
 
-    public float move_speed = 7.0f;
+    public float moveSpeed = 7.0f;
 
     GameObject target;
-    Vector3 target_start_position;
+    Vector3 targetStartPosition;
     GameObject aim;
     GameObject flail;
     public GameObject ball_prefab;
@@ -24,7 +24,7 @@ public class FinalCube : MonoBehaviour
     {
         controller = gameObject.GetComponent<CharacterController>();
         target = GameObject.FindGameObjectWithTag("Target");
-        target_start_position = target.transform.position;
+        targetStartPosition = target.transform.position;
         aim = transform.GetChild(0).gameObject;
         flail = transform.GetChild(1).gameObject;
         flail.SetActive(false);
@@ -32,7 +32,7 @@ public class FinalCube : MonoBehaviour
 
     void Update()
     {
-        controller.Move(new Vector3(input_move.x, 0.0f, input_move.y).normalized * move_speed * Time.deltaTime);
+        controller.Move(new Vector3(input_move.x, 0.0f, input_move.y).normalized * moveSpeed * Time.deltaTime);
     }
 
     public void FlailLaunch(GameObject other)
@@ -63,7 +63,7 @@ public class FinalCube : MonoBehaviour
     {
         if (context.phase == InputActionPhase.Started)
         {
-            target.transform.position = target_start_position;
+            target.transform.position = targetStartPosition;
             Rigidbody rigid_body = target.GetComponent<Rigidbody>();
 
             if (rigid_body.linearVelocity.magnitude > 0.0f)
