@@ -1818,8 +1818,8 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Cube4_0, Assembly-CSharp
+      - m_Target: {fileID: 493812941}
+        m_TargetAssemblyTypeName: FinalCube, Assembly-CSharp
         m_MethodName: Move
         m_Mode: 0
         m_Arguments:
@@ -1838,7 +1838,7 @@ MonoBehaviour:
     m_ActionName: 'Player/Look[/Mouse/delta]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 493812941}
         m_TargetAssemblyTypeName: FinalCube, Assembly-CSharp
         m_MethodName: Shoot
         m_Mode: 0
@@ -1854,7 +1854,7 @@ MonoBehaviour:
     m_ActionName: 'Player/Attack[/Mouse/leftButton,/Keyboard/enter]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 493812941}
         m_TargetAssemblyTypeName: FinalCube, Assembly-CSharp
         m_MethodName: ResetTarget
         m_Mode: 0
@@ -1910,7 +1910,7 @@ MonoBehaviour:
     m_ActionName: UI/TrackedDeviceOrientation
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 493812941}
         m_TargetAssemblyTypeName: FinalCube, Assembly-CSharp
         m_MethodName: Flail
         m_Mode: 0
@@ -1926,7 +1926,7 @@ MonoBehaviour:
     m_ActionName: Player/New action
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 493812941}
         m_TargetAssemblyTypeName: FinalCube, Assembly-CSharp
         m_MethodName: SubTask
         m_Mode: 0
@@ -1958,7 +1958,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 7
-  ball_prefab: {fileID: 5637190401345651350, guid: 7d6926be64d79364d8910cf9614ac5bb, type: 3}
+  ballPrefab: {fileID: 5637190401345651350, guid: 7d6926be64d79364d8910cf9614ac5bb, type: 3}
 --- !u!1 &560739948
 GameObject:
   m_ObjectHideFlags: 0

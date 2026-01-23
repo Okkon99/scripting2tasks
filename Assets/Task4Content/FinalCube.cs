@@ -16,7 +16,7 @@ public class FinalCube : MonoBehaviour
     Vector3 targetStartPosition;
     GameObject aim;
     GameObject flail;
-    public GameObject ball_prefab;
+    public GameObject ballPrefab;
 
     int subtask_focused_idx = 0;
 
@@ -47,7 +47,7 @@ public class FinalCube : MonoBehaviour
         if (context.phase == InputActionPhase.Started)
         {
             Vector3 ball_spawn_position = new Vector3(0.0f, 0.0f, 0.0f); // replace
-            GameObject ball = Instantiate(ball_prefab, ball_spawn_position, Quaternion.identity);
+            GameObject ball = Instantiate(ballPrefab, ball_spawn_position, Quaternion.identity);
 
             Vector3 force_vector = new Vector3(0.0f, 0.0f, 0.0f); // replace
             ball.GetComponent<Rigidbody>().AddForce(force_vector);
