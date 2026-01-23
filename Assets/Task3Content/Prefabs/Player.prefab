@@ -50,28 +50,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lookSensitivity: 0.02
   mouseScrollSensitivity: 1
-  groundSpeed: 0
-  airSpeed: 0
-  acceleration: 0
-  sprintSpeedPercent: 60
-  jumpHeight: 2
-  airControlStrength: 1.5
-  airControlDecay: 1
-  groundFriction: 0
+  groundSpeed: 9
+  airSpeed: 9
+  acceleration: 60
+  sprintSpeedPercent: 100
+  jumpHeight: 13
+  jumpCutMultiplier: 0.3
+  coyoteTimer: 0.12
+  groundFriction: 1
   airFriction: 0
-  airTimer: 0
   cameraDistanceMin: 5
   cameraDistanceMax: 15
-  gravity: -30
   cinemachineFollow: {fileID: 0}
   gameManager: {fileID: 0}
-  rb: {fileID: 0}
-  groundLayerMask:
+  rb: {fileID: 3337340922026381819}
+  playerCollider: {fileID: 7889239409361746209}
+  floorLayer:
     serializedVersion: 2
-    m_Bits: 0
-  groundCheckPoint: {fileID: 0}
-  groundCheckBoxSize: {x: 0.5, y: 0.2}
-  currentAirControl: 0
+    m_Bits: 128
 --- !u!33 &4381266311407725492
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -150,7 +146,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!136 &7889239409361746209
 CapsuleCollider:

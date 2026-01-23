@@ -1,7 +1,9 @@
+using Unity.Burst.Intrinsics;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Windows;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 namespace GameTask3
 {
@@ -23,7 +25,9 @@ namespace GameTask3
 
         [Header("Jump/Air control Settings")]
         [SerializeField] private float jumpHeight;
-        [SerializeField] private float airTimer;
+        [SerializeField] private float jumpCutMultiplier;
+        [SerializeField] private float coyoteTimer;
+
 
         [Header("Friction Settings")]
         [SerializeField] private float groundFriction;
@@ -37,6 +41,7 @@ namespace GameTask3
         [SerializeField] private CinemachineFollow cinemachineFollow;
         [SerializeField] private GameManager gameManager;
         [SerializeField] private Rigidbody rb;
+        [SerializeField] private CapsuleCollider playerCollider;
         [SerializeField] private LayerMask floorLayer;
 
 
@@ -45,27 +50,23 @@ namespace GameTask3
         float cameraDistance = 15.0f;
         float targetCameraDistance = 15.0f;
 
-
-        //player (old)
-        Vector3 velocity;
-        Vector3 verticalVelocity;
-        Vector3 horizontalVelocity;
-        float targetSpeed;
-        float baseSpeed;
-
         //player
         bool isGrounded;
-        float airTime;
         float currentSpeed;
-
         Vector3 desiredVelocity;
         Vector2 moveInput;
         bool jumpPressed;
+        bool jumpHeld;
+        bool canJump;
+        bool isJumping;
+        float coyoteTime;
+
         bool sprintHeld;
+        int counter;
+        Vector3 groundNormal;
+        RaycastHit groundHit;
 
-
-        //inventory
-        bool hasKey = false;
+        bool hasItem;
 
 
         private void Awake()
@@ -83,11 +84,16 @@ namespace GameTask3
         void Update()
         {
             // CACHE INPUTS
-                var input = GameManager.instance.Input.Gameplay;
+            var input = GameManager.instance.Input.Gameplay;
 
-                moveInput = input.Move.ReadValue<Vector2>();
-                jumpPressed = input.Jump.triggered;
-                sprintHeld = input.Sprint.IsPressed();
+            moveInput = input.Move.ReadValue<Vector2>();
+            jumpHeld = input.Jump.IsPressed();
+            sprintHeld = input.Sprint.IsPressed();
+
+            if (input.Jump.triggered)
+            {
+                jumpPressed = true;
+            }
             // CACHE INPUTS END
 
             { // CAMERA MOVEMENT
@@ -135,27 +141,117 @@ namespace GameTask3
                 }
 
             } // CAMERA MOVEMENT END
+
         }
 
         private void FixedUpdate()
         {
-            //temporary grounded check. just a raycast down. if hit, isGrounded=true
-            isGrounded = Physics.Raycast(transform.position, Vector3.down, 1.1f, floorLayer);
-            if(!isGrounded)
-                Debug.Log(isGrounded);
+            isGrounded = CheckGrounded(out groundHit);
+            groundNormal = isGrounded ? groundHit.normal : Vector3.up;
 
+
+            counter++;
+            Debug.Log(isGrounded);
+            Debug.Log(counter);
+
+
+
+            GetDesiredVelocity();
+
+            ApplyAccelVector();
+
+            ApplyFriction();
+
+            //Jump
+            if (isGrounded)
+            {
+                ResetCoyoteTime();
+                isJumping = false;
+            }
+            else
+            {
+                CoyoteTimeCountdown();
+            }
+
+            canJump = isGrounded || coyoteTime > 0f;
+
+            if (jumpPressed)
+            {
+                if (canJump)
+                {
+                    Jump();
+                }
+                jumpPressed = false;
+            }
+
+            if (!jumpHeld && isJumping && rb.linearVelocity.y > 0f)
+            {
+                JumpCancel();
+            }
+
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.layer == LayerMask.NameToLayer("Collectible"))
+            {
+                CollectItem(other.gameObject);
+            }
+        }
+
+        private void CollectItem(GameObject item)
+        {
+            hasItem = true;
+            Destroy(item);
+        }
+
+        private void ResetCoyoteTime()
+        {
+            coyoteTime = coyoteTimer;
+        }
+        private void CoyoteTimeCountdown()
+        {
+            coyoteTime -= Time.fixedDeltaTime;
+            coyoteTime = Mathf.Max(coyoteTime, 0f);
+        }
+
+        private void Jump()
+        {
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpHeight, rb.linearVelocity.z);
+            coyoteTime = 0f;
+            isJumping = true;
+        }
+        private void JumpCancel()
+        {
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, rb.linearVelocity.y * jumpCutMultiplier, rb.linearVelocity.z);
+
+            isJumping = false;
+        }
+
+        private void GetDesiredVelocity()
+        {
             Vector3 inputDirection = transform.forward * moveInput.y + transform.right * moveInput.x;
-            inputDirection = inputDirection.normalized;
+
+            if (inputDirection.sqrMagnitude > 1f)
+            {
+                inputDirection.Normalize();
+            }
 
             float speed = isGrounded ? groundSpeed : airSpeed;
 
-            if (sprintHeld && isGrounded)
+            if (isGrounded)
             {
-                speed *= 1f + sprintSpeedPercent / 100f;
+                if (sprintHeld)
+                {
+                    speed *= 1f + sprintSpeedPercent / 100f;
+                }
+                inputDirection = Vector3.ProjectOnPlane(inputDirection, groundHit.normal).normalized;
             }
-
             desiredVelocity = inputDirection * speed;
+        }
 
+        private void ApplyAccelVector()
+        {
             Vector3 currentVelocity = rb.linearVelocity;
             Vector3 currentHorizontal = new Vector3(currentVelocity.x, 0f, currentVelocity.z);
             Vector3 velocityDelta = desiredVelocity - currentHorizontal;
@@ -163,15 +259,25 @@ namespace GameTask3
             float maxAccel = acceleration * Time.fixedDeltaTime;
             Vector3 accelVector = Vector3.ClampMagnitude(velocityDelta, maxAccel);
             rb.linearVelocity += accelVector;
+        }
 
-            float friction = isGrounded ? groundFriction : airFriction;
-            
+        private void ApplyFriction()
+        {
             rb.linearDamping = isGrounded ? groundFriction : airFriction;
         }
 
-        public void PickupKey()
+        private bool CheckGrounded(out RaycastHit hit)
         {
-            hasKey = true;
+            float radius = playerCollider.radius * 0.95f;
+            float height = playerCollider.height * 0.5f - radius;
+
+            Vector3 center = transform.position + playerCollider.center;
+            Vector3 top = center + Vector3.up * height;
+            Vector3 bottom = center - Vector3.up * height;
+
+            float castDistance = 0.15f;
+
+            return Physics.CapsuleCast(top, bottom, radius, Vector3.down, out hit, castDistance, floorLayer, QueryTriggerInteraction.Ignore);
         }
     }
 }
