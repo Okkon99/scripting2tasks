@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Unity.Burst.Intrinsics;
 using Unity.Cinemachine;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Windows;
@@ -28,6 +29,8 @@ namespace GameTask3
         [SerializeField] private float jumpHeight;
         [SerializeField] private float jumpCutMultiplier;
         [SerializeField] private float coyoteTimer;
+        [SerializeField] private float diveLength;
+        [SerializeField] private float diveCooldown;
 
 
         [Header("Friction Settings")]
@@ -63,6 +66,12 @@ namespace GameTask3
         float coyoteTime;
 
         bool sprintHeld;
+
+        bool divePressed;
+        bool canDive = true;
+        bool isDiving;
+        float diveCooldownTimer;
+    
 
         Vector3 groundNormal;
         RaycastHit groundHit;
@@ -107,7 +116,24 @@ namespace GameTask3
             {
                 jumpPressed = true;
             }
+
+            if (input.DiveCrouch.triggered)
+            {
+                divePressed = true;
+            }
             // CACHE INPUTS END
+
+            { // TIMERS AND DELAY
+                if (!canDive && isGrounded)
+                {
+                    diveCooldownTimer -= Time.deltaTime;
+
+                    if (diveCooldownTimer <= 0f)
+                    {
+                        canDive = true;
+                    }
+                }
+            }
 
             { // CAMERA MOVEMENT
                 Vector2 lookDelta = input.Look.ReadValue<Vector2>();
@@ -162,8 +188,6 @@ namespace GameTask3
             isGrounded = CheckGrounded(out groundHit);
             groundNormal = isGrounded ? groundHit.normal : Vector3.up;
 
-
-
             GetDesiredVelocity();
 
             ApplyAccelVector();
@@ -190,6 +214,11 @@ namespace GameTask3
                     Jump();
                 }
                 jumpPressed = false;
+
+                if (isDiving)
+                {
+                    DiveCancel();
+                }
             }
 
             if (!jumpHeld && isJumping && rb.linearVelocity.y > 0f)
@@ -197,7 +226,16 @@ namespace GameTask3
                 JumpCancel();
             }
 
+            if (divePressed)
+            {
+                if (canDive)
+                {
+                    Dive();
+                }
+                divePressed = false;
+            }
         }
+
 
 
         private void ResetCoyoteTime()
@@ -221,6 +259,28 @@ namespace GameTask3
             rb.linearVelocity = new Vector3(rb.linearVelocity.x, rb.linearVelocity.y * jumpCutMultiplier, rb.linearVelocity.z);
 
             isJumping = false;
+        }
+
+        private void Dive()
+        {
+            Vector3 inputDirection = transform.forward * moveInput.y + transform.right * moveInput.x;
+
+            if (inputDirection.sqrMagnitude > 1f)
+            {
+                inputDirection.Normalize();
+            }
+
+            rb.linearVelocity = new Vector3(inputDirection.x * diveLength, 1f, inputDirection.z * diveLength);
+
+            canDive = false;
+            isDiving = true;
+            diveCooldownTimer = diveCooldown;
+        }
+
+        private void DiveCancel()
+        {
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpHeight * 0.5f, rb.linearVelocity.z);
+            isDiving = false;
         }
 
         private void GetDesiredVelocity()
@@ -263,16 +323,19 @@ namespace GameTask3
 
         private bool CheckGrounded(out RaycastHit hit)
         {
-            float radius = playerCollider.radius * 0.95f;
-            float height = playerCollider.height * 0.5f - radius;
+            Vector3 center = transform.position;
+            float castDistance = 1.25f;
 
-            Vector3 center = transform.position + playerCollider.center;
-            Vector3 top = center + Vector3.up * height;
-            Vector3 bottom = center - Vector3.up * height;
+            return Physics.Raycast(center, Vector3.down, out hit, castDistance, floorLayer);
+        }
 
-            float castDistance = 0.15f;
+        private void OnDrawGizmos()
+        {
+            Vector3 center = transform.position;
+            float castDistance = 1.25f;
 
-            return Physics.CapsuleCast(top, bottom, radius, Vector3.down, out hit, castDistance, floorLayer, QueryTriggerInteraction.Ignore);
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(center, center + Vector3.down * castDistance);
         }
     }
 }
