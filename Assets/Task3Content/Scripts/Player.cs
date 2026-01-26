@@ -62,11 +62,11 @@ namespace GameTask3
         float coyoteTime;
 
         bool sprintHeld;
-        int counter;
+
         Vector3 groundNormal;
         RaycastHit groundHit;
 
-        bool hasItem;
+        public bool hasKey;
 
 
         private void Awake()
@@ -150,11 +150,6 @@ namespace GameTask3
             groundNormal = isGrounded ? groundHit.normal : Vector3.up;
 
 
-            counter++;
-            Debug.Log(isGrounded);
-            Debug.Log(counter);
-
-
 
             GetDesiredVelocity();
 
@@ -201,7 +196,7 @@ namespace GameTask3
 
         private void CollectItem(GameObject item)
         {
-            hasItem = true;
+            hasKey = true;
             Destroy(item);
         }
 
