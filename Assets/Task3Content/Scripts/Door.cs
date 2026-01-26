@@ -1,18 +1,31 @@
 using GameTask3;
+using System.Security.Cryptography.X509Certificates;
 using Unity.VisualScripting;
 using UnityEngine;
+using static GameTask3.Player;
+
 
 public class Door : MonoBehaviour
 {
+    [SerializeField] KeyId requiredKey;
     [SerializeField] float animationSpeed;
 
     [SerializeField] BoxCollider col;
     [SerializeField] BoxCollider trigger;
 
-    bool isOpening;
-    bool isClosing;
-    Vector3 pos;
 
+    enum DoorState
+    {
+        Closed,
+        Opening,
+        Open,
+        Closing
+    }
+
+
+
+    DoorState state;
+    Vector3 pos;
     Vector3 openPos;
     Vector3 closedPos;
 
@@ -20,6 +33,7 @@ public class Door : MonoBehaviour
     {
         closedPos = transform.position;
         openPos = closedPos + Vector3.down * transform.localScale.y - new Vector3(0f, 0.1f, 0f);
+        state = DoorState.Closed;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -29,18 +43,14 @@ public class Door : MonoBehaviour
             return;
         }
 
-        if (transform.position == closedPos)
+        if (!player.HasKey(requiredKey))
         {
-            isClosing = false;       
-        }
-        else
-        {
-
+            return;
         }
 
-        if (player.hasKey)
+        if (state == DoorState.Closing || state == DoorState.Closed)
         {
-            isOpening = true;
+            state = DoorState.Opening;
         }
     }
 
@@ -51,22 +61,38 @@ public class Door : MonoBehaviour
             return;
         }
 
-        isOpening = false;
-        isClosing = true;
+        if (state == DoorState.Opening || state == DoorState.Open)
+        {
+            state = DoorState.Closing;
+        }
     }
 
 
 
     private void Update()
     {
-        if (isOpening)
+        switch (state)
         {
-            transform.position = Vector3.MoveTowards(transform.position, openPos, animationSpeed * Time.deltaTime);
-        }
+            case DoorState.Opening: transform.position = Vector3.MoveTowards(transform.position, openPos, animationSpeed * Time.deltaTime);
 
-        if (isClosing)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, closedPos, animationSpeed * Time.deltaTime);
+                if (Vector3.Distance(transform.position, openPos) < 0.01f)
+                {
+                    state = DoorState.Open;
+                }
+                break;
+
+            case DoorState.Closing: transform.position = Vector3.MoveTowards(transform.position, closedPos, animationSpeed * Time.deltaTime);
+
+                if (Vector3.Distance(transform.position, closedPos) < 0.01f)
+                {
+                    state =DoorState.Closed;
+                }
+                break;
         }
+    }
+
+    public bool CanOpen(Player player)
+    {
+        return player.HasKey(requiredKey);
     }
 }

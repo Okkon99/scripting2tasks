@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.Burst.Intrinsics;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -66,13 +67,25 @@ namespace GameTask3
         Vector3 groundNormal;
         RaycastHit groundHit;
 
-        public bool hasKey;
-
-
-        private void Awake()
+        public enum KeyId
         {
-
+            Red,
+            Green,
+            Blue,
+            Purple
         }
+
+        private HashSet<KeyId> keys = new HashSet<KeyId>();
+        public bool HasKey(KeyId id)
+        {
+            return keys.Contains(id);
+        }
+
+        public void AddKey(KeyId id)
+        {
+            keys.Add(id);
+        }
+
 
 
         void Start()
@@ -186,19 +199,6 @@ namespace GameTask3
 
         }
 
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject.layer == LayerMask.NameToLayer("Collectible"))
-            {
-                CollectItem(other.gameObject);
-            }
-        }
-
-        private void CollectItem(GameObject item)
-        {
-            hasKey = true;
-            Destroy(item);
-        }
 
         private void ResetCoyoteTime()
         {
