@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class Cube4_4 : MonoBehaviour
 {
-    Vector3 start_position;
+    Vector3 startPosition;
 
     void Start()
     {
-        start_position = transform.position;
+        startPosition = transform.position;
     }
 
     void Update()
