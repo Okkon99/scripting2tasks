@@ -8,5 +8,10 @@ public class Cube4_7 : MonoBehaviour
 
     void Update()
     {
+        float distance = (orbitTarget.transform.position - transform.position).magnitude;
+
+        transform.position = orbitTarget.transform.position;
+        transform.Rotate(0f, 1f, 0f);
+        transform.position += transform.forward * distance;
     }
 }

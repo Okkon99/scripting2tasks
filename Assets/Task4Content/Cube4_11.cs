@@ -20,5 +20,7 @@ public class Cube4_11 : MonoBehaviour
         {
             vectors.Draw(transform.position, transform.position + transform.forward * 2.0f, new Color(1.0f, 0.7f, 0.0f) * 5.0f);
         }
+
+        transform.LookAt(target.transform);
     }
 }
