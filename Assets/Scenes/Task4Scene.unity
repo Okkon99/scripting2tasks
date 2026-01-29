@@ -2059,7 +2059,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ed0ef2c86b381b44b18af198e857696, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotation: {x: 0, y: 0, z: 0}
+  rotation: {x: 5, y: 5, z: 5}
 --- !u!1 &587248610
 GameObject:
   m_ObjectHideFlags: 0
@@ -2436,11 +2436,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 721417935}
+  - component: {fileID: 721417941}
   - component: {fileID: 721417940}
   - component: {fileID: 721417939}
   - component: {fileID: 721417938}
   - component: {fileID: 721417937}
-  - component: {fileID: 721417941}
   m_Layer: 0
   m_Name: Cube4.1
   m_TagString: Untagged
@@ -2565,7 +2565,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40e49f123821dfa43aa376b4363fa170, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: {x: 0, y: 0, z: 0}
+  moveSpeed: 2
 --- !u!1 &755589688
 GameObject:
   m_ObjectHideFlags: 0
@@ -2745,6 +2745,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &780522086
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 780522087}
+  m_Layer: 0
+  m_Name: InputManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &780522087
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780522086}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1509655742}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &821372662
 GameObject:
   m_ObjectHideFlags: 0
@@ -4154,6 +4185,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveDistance: 0.05
   orbitTarget: {fileID: 244636291}
+  distance: 2.5
 --- !u!23 &1386594865
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4452,6 +4484,7 @@ Transform:
   - {fileID: 1883711732}
   - {fileID: 1571226428}
   - {fileID: 148093323}
+  - {fileID: 780522087}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1571226426
@@ -5418,7 +5451,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1774811339}
-  angle: 2
+  angle: 3.14
   thisShouldBeAStaticValue: 0
 --- !u!1 &1810322335
 GameObject:
@@ -6430,8 +6463,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f8908ca64535d348990250262961468, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveDistance: 0.05
   orbitTarget: {fileID: 1840362317}
-  rotation: {x: -1, y: 0.3, z: 0}
+  rotation: {x: 5, y: 5, z: 5}
+  distance: 2.5
 --- !u!23 &2011540950
 MeshRenderer:
   m_ObjectHideFlags: 0

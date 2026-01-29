@@ -13,6 +13,7 @@ public class FinalCube : MonoBehaviour
     public float moveSpeed = 7.0f;
 
     GameObject target;
+    Vector3 targetDir;
     Vector3 targetStartPosition;
     GameObject aim;
     GameObject flail;
@@ -32,6 +33,8 @@ public class FinalCube : MonoBehaviour
 
     void Update()
     {
+        targetDir = (target.transform.position - transform.position).normalized;
+        aim.transform.position = transform.position + (targetDir);
         controller.Move(new Vector3(input_move.x, 0.0f, input_move.y).normalized * moveSpeed * Time.deltaTime);
     }
 
