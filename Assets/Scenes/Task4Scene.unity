@@ -1958,6 +1958,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 108dfbc5f5bcf19408b2c61a503c3b4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ballForce: 12000
+  flailForce: 2000
   moveSpeed: 7
   ballPrefab: {fileID: 5637190401345651350, guid: 7d6926be64d79364d8910cf9614ac5bb, type: 3}
 --- !u!1 &560739948
@@ -6170,6 +6172,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a63524de67a5da4884f387eefa32bde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 493812929}
+  angle: 15
 --- !u!1 &1916408800
 GameObject:
   m_ObjectHideFlags: 0

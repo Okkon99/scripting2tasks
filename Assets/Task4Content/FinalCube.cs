@@ -6,9 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class FinalCube : MonoBehaviour
 {
+    [SerializeField] float ballForce;
+    [SerializeField] float flailForce;
+
     CharacterController controller;
 
-    Vector2 input_move;
+    Vector2 inputMove;
 
     public float moveSpeed = 7.0f;
 
@@ -17,6 +20,7 @@ public class FinalCube : MonoBehaviour
     Vector3 targetStartPosition;
     GameObject aim;
     GameObject flail;
+    Vector3 flailToTargetDir;
     public GameObject ballPrefab;
 
     int subtask_focused_idx = 0;
@@ -35,31 +39,33 @@ public class FinalCube : MonoBehaviour
     {
         targetDir = (target.transform.position - transform.position).normalized;
         aim.transform.position = transform.position + (targetDir);
-        controller.Move(new Vector3(input_move.x, 0.0f, input_move.y).normalized * moveSpeed * Time.deltaTime);
+        controller.Move(new Vector3(inputMove.x, 0.0f, inputMove.y).normalized * moveSpeed * Time.deltaTime);
+
+        flailToTargetDir = (target.transform.position - flail.transform.position).normalized;
     }
 
     public void FlailLaunch(GameObject other)
     {
-        Vector3 launch_vector = new Vector3(0.0f, 0.0f, 0.0f); // replace
+        Vector3 launchVector = flailToTargetDir * flailForce; // replace
 
-        other.gameObject.GetComponent<Rigidbody>().AddForce(launch_vector);
+        other.gameObject.GetComponent<Rigidbody>().AddForce(launchVector);
     }
 
     public void Shoot(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Started)
         {
-            Vector3 ball_spawn_position = new Vector3(0.0f, 0.0f, 0.0f); // replace
-            GameObject ball = Instantiate(ballPrefab, ball_spawn_position, Quaternion.identity);
+            Vector3 ballSpawnPosition = aim.transform.position;
+            GameObject ball = Instantiate(ballPrefab, ballSpawnPosition, Quaternion.identity);
 
-            Vector3 force_vector = new Vector3(0.0f, 0.0f, 0.0f); // replace
-            ball.GetComponent<Rigidbody>().AddForce(force_vector);
+            Vector3 forceVector = targetDir * ballForce;
+            ball.GetComponent<Rigidbody>().AddForce(forceVector);
         }
     }
 
     public void Move(InputAction.CallbackContext context)
     {
-        input_move = context.ReadValue<Vector2>();
+        inputMove = context.ReadValue<Vector2>();
     }
 
     public void ResetTarget(InputAction.CallbackContext context)
