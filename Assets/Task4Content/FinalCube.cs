@@ -39,6 +39,7 @@ public class FinalCube : MonoBehaviour
     {
         targetDir = (target.transform.position - transform.position).normalized;
         aim.transform.position = transform.position + (targetDir);
+        aim.transform.LookAt(target.transform);
         controller.Move(new Vector3(inputMove.x, 0.0f, inputMove.y).normalized * moveSpeed * Time.deltaTime);
 
         flailToTargetDir = (target.transform.position - flail.transform.position).normalized;
