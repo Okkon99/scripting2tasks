@@ -15,6 +15,8 @@ public class FinalCube : MonoBehaviour
 
     public float moveSpeed = 7.0f;
 
+    [SerializeField] float rotateSpeed;
+
     GameObject target;
     Vector3 targetDir;
     Vector3 targetStartPosition;
@@ -22,6 +24,7 @@ public class FinalCube : MonoBehaviour
     GameObject flail;
     Vector3 flailToTargetDir;
     public GameObject ballPrefab;
+    float currentAimRot;
 
     int subtask_focused_idx = 0;
 
@@ -39,7 +42,10 @@ public class FinalCube : MonoBehaviour
     {
         targetDir = (target.transform.position - transform.position).normalized;
         aim.transform.position = transform.position + (targetDir);
+
+        currentAimRot += rotateSpeed * Time.deltaTime * 180f;
         aim.transform.LookAt(target.transform);
+        aim.transform.Rotate(0, 0, currentAimRot);
         controller.Move(new Vector3(inputMove.x, 0.0f, inputMove.y).normalized * moveSpeed * Time.deltaTime);
 
         flailToTargetDir = (target.transform.position - flail.transform.position).normalized;

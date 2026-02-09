@@ -1961,6 +1961,7 @@ MonoBehaviour:
   ballForce: 12000
   flailForce: 2000
   moveSpeed: 7
+  rotateSpeed: 3
   ballPrefab: {fileID: 5637190401345651350, guid: 7d6926be64d79364d8910cf9614ac5bb, type: 3}
 --- !u!1 &560739948
 GameObject:
